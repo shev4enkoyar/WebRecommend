@@ -21,10 +21,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
-                        </li>
+                        
+                        
                     </ul>
+                    @if (User.IsInRole("admin"))
+                        {
+                            <div class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">Admin menu</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Category</a></li>
+                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="Index">Something</a></li>
+                                    <!--<li><hr class="dropdown-divider"></li>-->
+                                </ul>
+                            </div>
+                        }
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
