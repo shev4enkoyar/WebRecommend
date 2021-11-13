@@ -42,8 +42,7 @@ namespace WebRecommend
             services.AddAuthentication()
                 .AddFacebook(facebookOptions =>
                 {
-                    facebookOptions.AppId = "6447431495330486";
-                    facebookOptions.AppSecret = "087ba8dc01ad9dc9f892fdf58e827758";
+
                 });
 
             services.AddHttpContextAccessor();
