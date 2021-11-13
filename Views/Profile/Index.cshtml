@@ -1,0 +1,40 @@
+﻿@model WebRecommend.Models.ViewModels.ProfileVM
+
+@if (Model.Articles.Count() > 0)
+{
+    <table class="table table-bordered table-striped w-100">
+        <thead>
+            <tr>
+                <td class="text text-monospace col">Title</td>
+                <td class="text text-monospace col">Create date</td>
+                <td class="text text-monospace col">Category name</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model.Articles)
+            {
+                <tr>
+                    <th scope="row">@obj.Title</th>
+                    <td>@obj.CreateDate.ToShortDateString()</td>
+                    <td>@obj.Category.Name</td>
+                    @if (Model.CurrUser.Id == obj.User.Id || User.IsInRole("admin"))
+                    {
+                        <td class="text-center">
+                            <div class="btn-group" role="group">
+                                <a asp-controller="Article" asp-route-Id="@obj.Id" asp-action="Upsert" class="btn btn-primary text-center">Edit</a>
+                                <a asp-controller="Article" asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger text-center">Delete</a>
+                            </div>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+else
+{
+    <p>You don't have any articles</p>
+
+}

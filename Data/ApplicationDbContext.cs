@@ -12,6 +12,9 @@ namespace WebRecommend.Data
         }
 
         public DbSet<Category> Categories { get; set; }
+
         public DbSet<AppUser> ApplicationUsers { get; set; }
+
+        public DbSet<Article> Articles { get; set; }
     }
 }

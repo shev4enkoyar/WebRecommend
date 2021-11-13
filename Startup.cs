@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebRecommend.Data;
+using WebRecommend.Models;
 
 namespace WebRecommend
 {
@@ -33,10 +34,19 @@ namespace WebRecommend
                 options.UseMySql(connectionString, serverVersion);
             });
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<AppUser, IdentityRole>()
                 .AddDefaultTokenProviders()
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddAuthentication()
+                .AddFacebook(facebookOptions =>
+                {
+                    facebookOptions.AppId = "6447431495330486";
+                    facebookOptions.AppSecret = "087ba8dc01ad9dc9f892fdf58e827758";
+                });
+
+            services.AddHttpContextAccessor();
 
             services.AddControllersWithViews();
         }
