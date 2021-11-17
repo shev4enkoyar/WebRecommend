@@ -10,11 +10,24 @@ namespace WebRecommend.Data
         {
 
         }
-
-        public DbSet<Category> Categories { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ArticleTag>()
+                .HasKey(c => new { c.ArticleId, c.TagId });
+            base.OnModelCreating(modelBuilder);
+        }
 
         public DbSet<AppUser> ApplicationUsers { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
         public DbSet<Article> Articles { get; set; }
+
+        public DbSet<ArticleTag> ArticleTags { get; set; }
+
+        public DbSet<Tag> Tags { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
     }
 }
