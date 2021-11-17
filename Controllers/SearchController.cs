@@ -15,11 +15,19 @@ namespace WebRecommend.Controllers
         {
             _db = db;
         }
-        public IActionResult Index(string search_query)
-        {
-            SearchVM searchVM = new();
 
-            if (search_query != null)
+        public IActionResult Index(string search_query, string search_tag)
+        {
+
+            SearchVM searchVM = new();
+            if (search_query == null)
+            {
+                return View(searchVM);
+            }
+
+            search_query = search_query.Trim();
+
+            if (search_query != null && search_query.Length > 0)
             {
                 searchVM.UserQuery = search_query;
 

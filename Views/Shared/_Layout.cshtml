@@ -22,9 +22,16 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="get" asp-controller="Search" asp-action="Index">
-                        <input type="search" class="form-control" name="search_query" placeholder="Search..." aria-label="Search">
-                    </form>
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <form class=" col-12 col-lg-auto" method="get" asp-controller="Search" asp-action="Index">
+                                <input type="search" class="mt-1 form-control" name="search_query" placeholder="Search..." aria-label="Search">
+                            </form>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
                     @if (User.Identity.IsAuthenticated)
 
                     {

@@ -7,7 +7,7 @@
 
 
 
-@if (Model.Articles != null && Model.Articles.Count() > 0)
+@if (Model.Articles != null && Model.UserQuery != null && Model.Articles.Count() > 0)
 {
     <h1>Поиск по запросу: "@Model.UserQuery"</h1>
     <div class="col-10 mb-2">
@@ -18,7 +18,11 @@
         }
     </div>
 }
+else if (@Model.UserQuery != null)
+{
+    <h1>По запросу: "@Model.UserQuery" ничего не найдено</h1>
+}
 else
 {
-    <h1>Пусто! Возможно вы хотели что-то найти</h1>
+    <h1>Введите свой запрос в окно поиска</h1>
 }
