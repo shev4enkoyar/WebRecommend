@@ -1,0 +1,24 @@
+﻿@model WebRecommend.Models.ViewModels.SearchVM
+
+@{
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@if (Model.Articles != null && Model.Articles.Count() > 0)
+{
+    <h1>Поиск по запросу: "@Model.UserQuery"</h1>
+    <div class="col-10 mb-2">
+
+        @foreach (var obj in Model.Articles)
+        {
+            <partial name="_ArticleCard" model="obj" />
+        }
+    </div>
+}
+else
+{
+    <h1>Пусто! Возможно вы хотели что-то найти</h1>
+}
