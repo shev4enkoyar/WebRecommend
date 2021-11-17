@@ -42,7 +42,13 @@ namespace WebRecommend
             services.AddAuthentication()
                 .AddFacebook(facebookOptions =>
                 {
-
+                    facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                    facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                })
+                .AddGoogle(googleOptions =>
+                {
+                    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
                 });
 
             services.AddHttpContextAccessor();

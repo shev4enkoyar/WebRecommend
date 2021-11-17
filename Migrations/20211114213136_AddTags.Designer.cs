@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebRecommend.Data;
 
 namespace WebRecommend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211114213136_AddTags")]
+    partial class AddTags
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -234,6 +236,9 @@ namespace WebRecommend.Migrations
                     b.Property<string>("Desсription")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Tags")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -248,21 +253,6 @@ namespace WebRecommend.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Articles");
-                });
-
-            modelBuilder.Entity("WebRecommend.Models.ArticleTag", b =>
-                {
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TagId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ArticleId", "TagId");
-
-                    b.HasIndex("TagId");
-
-                    b.ToTable("ArticleTags");
                 });
 
             modelBuilder.Entity("WebRecommend.Models.Category", b =>
@@ -308,20 +298,6 @@ namespace WebRecommend.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("WebRecommend.Models.MyISAMTable", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MyISAMTable");
-                });
-
             modelBuilder.Entity("WebRecommend.Models.Tag", b =>
                 {
                     b.Property<int>("Id")
@@ -329,6 +305,7 @@ namespace WebRecommend.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -415,25 +392,6 @@ namespace WebRecommend.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("WebRecommend.Models.ArticleTag", b =>
-                {
-                    b.HasOne("WebRecommend.Models.Article", "Article")
-                        .WithMany()
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebRecommend.Models.Tag", "Tag")
-                        .WithMany()
-                        .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Article");
-
-                    b.Navigation("Tag");
                 });
 
             modelBuilder.Entity("WebRecommend.Models.Comment", b =>
