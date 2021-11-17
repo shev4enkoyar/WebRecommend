@@ -5,6 +5,7 @@
 
 /Migrations/
 appsettings.*
+launchSettings.json
 
 # User-specific files
 *.rsuser
