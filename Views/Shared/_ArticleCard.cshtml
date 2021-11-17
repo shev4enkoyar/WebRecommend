@@ -1,13 +1,15 @@
 ﻿@model WebRecommend.Models.Article
 
-<div class="col-md-6 filter @Model.Category.Name.Replace(" ", "_")">
+<div class="col filter @Model.Category.Name.Replace(" ", "_")">
     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
             <strong class="d-inline-block mb-2 text-primary">@Model.Category.Name</strong>
             <h3 class="mb-0">@Model.Title</h3>
             <div class="mb-1 text-muted">@Model.CreateDate.ToString("MMM dd") by <b>@Model.User.FullName</b></div>
             <p class="card-text mb-auto">@Model.Desсription</p>
-            <a asp-action="Details" asp-route-id="@Model.Id" class="stretched-link">Read full article</a>
+            <div class="mt-1">
+                <a asp-controller="Home" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary">Читать далее</a>
+            </div>
         </div>
     </div>
 </div>

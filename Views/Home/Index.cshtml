@@ -13,12 +13,21 @@
         }
     </div>
     <br />
-    <div class="row mb-2">
-        @foreach (var prod in Model.Articles)
-        {
-            <partial name="_ArticleCard" model="prod" />
-        }
+    <div class="row">
+        <div class="col-10 mb-2">
+            @foreach (var prod in Model.Articles)
+            {
+                <partial name="_ArticleCard" model="prod" />
+            }
+        </div>
+        <div class="col-2">
+            @foreach (var obj in Model.Tags)
+            {
+                <button type="button" class="btn btn-outline-warning btn-sm mb-1">@obj.Name</button>
+            }
+        </div>
     </div>
+
 </div>
 
 @section Scripts{

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -14,21 +15,20 @@ namespace WebRecommend.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
+        public HomeController(ApplicationDbContext db)
         {
-            _logger = logger;
             _db = db;
         }
 
         public IActionResult Index()
         {
-            HomeVM homeVM = new HomeVM()
+            HomeVM homeVM = new()
             {
                 Articles = _db.Articles.Include(u => u.Category).Include(u => u.User),
-                Categories = _db.Categories
+                Categories = _db.Categories,
+                Tags = _db.Tags
             };
 
             return View(homeVM);
@@ -36,12 +36,15 @@ namespace WebRecommend.Controllers
 
         public IActionResult Details(int id)
         {
-            Article article = _db.Articles
+            DetailsVM detailsVM = new()
+            {
+                Article = _db.Articles
                 .Include(u => u.Category)
                 .Include(u => u.User)
-                .Where(u => u.Id == id).FirstOrDefault();
-
-            return View(article);
+                .Where(u => u.Id == id).FirstOrDefault(),
+                ArticleTag = _db.ArticleTags.Include(u => u.Tag).Where(u => u.ArticleId == id)
+            };
+            return View(detailsVM);
         }
 
         public IActionResult Privacy()

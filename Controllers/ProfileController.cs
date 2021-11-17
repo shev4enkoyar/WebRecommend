@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using WebRecommend.Models.ViewModels;
 
 namespace WebRecommend.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -24,18 +26,18 @@ namespace WebRecommend.Controllers
 
         public IActionResult Index(string id)
         {
-            var userId = id;
+
             var currUser = _userManager.GetUserAsync(HttpContext.User).Result;
             ProfileVM profileVM = new ProfileVM()
             {
-                Articles = _db.Articles
+                Article = _db.Articles
                 .Include(u => u.Category)
                 .Include(u => u.User)
-                .Where(u => u.User.Id == userId),
+                .Where(u => u.User.Id == id),
                 CurrUser = currUser,
-                AppUser = _userManager.FindByIdAsync(userId).Result
-
+                AppUser = _userManager.FindByIdAsync(id).Result
             };
+
             return View(profileVM);
         }
     }

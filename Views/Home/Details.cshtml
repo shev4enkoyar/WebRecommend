@@ -1,10 +1,19 @@
-﻿@model WebRecommend.Models.Article
+﻿@model WebRecommend.Models.ViewModels.DetailsVM
 
 <div class="p-4 mb-3 bg-light rounded blog-post">
     <form method="post">
-        <h2 class="blog-post-title">@Model.Title</h2>
-        <p class="blog-post-meta">@Model.CreateDate.ToString("MMMM dd, yyyy") by <a asp-route-id="@Model.User.Id" asp-controller="Profile" asp-action="Index">@Model.User.FullName</a></p>
-        <p>@Html.Raw(Model.Body)</p>
+        <h2 class="blog-post-title">@Model.Article.Title</h2>
+        <p class="blog-post-meta text-secondary">@Model.Article.CreateDate.ToString("MMMM dd, yyyy") by <a asp-route-id="@Model.Article.User.Id" asp-controller="Profile" asp-action="Index">@Model.Article.User.FullName</a></p>
+        <p>@Html.Raw(Model.Article.Body)</p>
+        <div class="row">
+            @foreach (var item in Model.ArticleTag)
+            {
+                <p class="text-secondary col-md-auto text-opacity-25">
+                    @item.Tag.Name
+                </p>
+            }
+        </div>
+
         <a asp-action="Index" class="btn btn-success btn-square form-control btn-lg">Back to other articles</a>
     </form>
 </div>
