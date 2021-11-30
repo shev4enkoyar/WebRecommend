@@ -1,4 +1,7 @@
-﻿@model WebRecommend.Models.ViewModels.HomeVM
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@model WebRecommend.Models.ViewModels.HomeVM
 
 @{
     ViewData["Title"] = "Home Page";
@@ -6,7 +9,17 @@
 
 <div class="container">
     <div class="text-center">
-        <button class="btn btn-dark filter-button" data-filter="all">All</button>
+        <div class="btn-group">
+            <div class="fs-5 me-1">
+                @Localizer["SortBy"]
+                <a class="btn btn-outline-secondary" asp-action="Index" asp-route-sortOn="@ViewBag.DateSort">@Localizer["SortByDate"]</a>
+                <a class="btn btn-outline-secondary me-5" asp-action="Index" asp-route-sortOn="@ViewBag.RatingSort">@Localizer["SortByRating"]</a>
+            </div>
+
+        </div>
+
+
+        <button class="btn btn-dark filter-button" data-filter="all">@Localizer["CategoryAll"]</button>
         @foreach (var obj in Model.Categories)
         {
             <button class="btn btn-outline-secondary filter-button" data-filter="@obj.Name.Replace(" ", "_")">@obj.Name</button>
@@ -21,6 +34,7 @@
             }
         </div>
         <div class="col-2">
+            <p class="h4 text-center">@Localizer["TagCloud"]</p>
             @foreach (var obj in Model.Tags)
             {
                 <button type="button" class="btn btn-outline-warning btn-sm mb-1">@obj.Name</button>
@@ -32,10 +46,8 @@
 
 @section Scripts{
 <script>
-        $(document).ready(function(){
-
+    $(document).ready(function(){
         $(".filter-button").click(function(){
-
             var value = $(this).attr('data-filter');
             if(value == "all")
             {

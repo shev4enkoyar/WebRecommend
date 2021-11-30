@@ -9,7 +9,7 @@
 
 @if (Model.Articles != null && Model.UserQuery != null && Model.Articles.Count() > 0)
 {
-    <h1>Поиск по запросу: "@Model.UserQuery"</h1>
+    <h1>@Localizer["SearchBy"] "@Model.UserQuery"</h1>
     <div class="col-10 mb-2">
 
         @foreach (var obj in Model.Articles)
@@ -20,9 +20,9 @@
 }
 else if (@Model.UserQuery != null)
 {
-    <h1>По запросу: "@Model.UserQuery" ничего не найдено</h1>
+    <h1>@Localizer["NoMatch"] "@Model.UserQuery"</h1>
 }
 else
 {
-    <h1>Введите свой запрос в окно поиска</h1>
+    <h1>@Localizer["EmptyQuery"]</h1>
 }

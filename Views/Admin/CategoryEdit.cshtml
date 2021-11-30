@@ -4,12 +4,12 @@
     <input asp-for="Id" hidden />
     <div class="border p-3">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group row">
-            <h2 class="text-alert-info pl-3">Edit Category</h2>
+        <div class="row">
+            <h2 class="text-alert-info pl-3">@Localizer["CategoryEditTitle"]</h2>
         </div>
         <div class="row">
             <div class="col-8">
-                <div class="form-group row">
+                <div class="row">
                     <div class="col-4">
                         <label asp-for="Name"></label>
                     </div>
@@ -19,14 +19,14 @@
                     </div>
 
                 </div>
-                <div class="form-group row">
+                <div class="mt-2 row">
                     <div class="col-8 offset-4 row">
 
                         <div class="col">
-                            <input type="submit" class="btn btn-info w-100" value="Update" />
+                            <input type="submit" class="btn btn-info w-100" value="@Localizer["UpdateBtn"]" />
                         </div>
                         <div class="col">
-                            <a asp-action="Categories" class="btn btn-success w-100">Back</a>
+                            <a asp-action="Categories" class="btn btn-success w-100">@Localizer["CancelBtn"]</a>
                         </div>
                     </div>
                 </div>

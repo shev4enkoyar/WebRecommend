@@ -11,21 +11,29 @@ namespace WebRecommend.Models
         public int Id { get; set; }
 
         [Required]
+        [Display(Name = "Title")]
         public string Title { get; set; }
 
+        [Required]
+        [Display(Name = "Desсription")]
         public string Desсription { get; set; }
 
         [Required]
+        [Display(Name = "Body")]
         public string Body { get; set; }
 
         public DateTime CreateDate { get; set; }
 
+        public double RatingAverage { get; set; }
+
+        [Display(Name = "UserId")]
         public string UserId { get; set; }
 
         [ForeignKey("UserId")]
         public virtual AppUser User { get; set; }
 
         [Required]
+        [Display(Name = "CategoryId")]
         public int CategoryId { get; set; }
 
         [ForeignKey("CategoryId")]

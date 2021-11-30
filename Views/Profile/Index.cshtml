@@ -1,15 +1,15 @@
 ﻿@model WebRecommend.Models.ViewModels.ProfileVM
 
-<h1>@Model.AppUser.FullName</h1>
+<h1>@Model.AppUser.FullName <i class="bi bi-caret-up"></i>@Model.AppUser.Reputation</h1>
 
 @if (Model.Article.Count() > 0)
 {
-    <table class="table table-bordered table-striped w-100">
+    <table id="dataTable" class="table table-bordered w-100">
         <thead>
             <tr>
-                <td class="text text-monospace col">Title</td>
-                <td class="text text-monospace col">Create date</td>
-                <td class="text text-monospace col">Category name</td>
+                <td class="text text-monospace col">@Localizer["Title"]</td>
+                <td class="text text-monospace col">@Localizer["CreateDate"]</td>
+                <td class="text text-monospace col">@Localizer["Category"]</td>
                 <td></td>
             </tr>
         </thead>
@@ -22,11 +22,11 @@
                     <td>@obj.Category.Name</td>
                     <td class="text-center">
                         <div class="btn-group" role="group">
-                            <a asp-controller="Home" asp-route-Id="@obj.Id" asp-action="Details" class="btn btn-primary text-center">To page</a>
+                            <a asp-controller="Home" asp-route-Id="@obj.Id" asp-action="Details" class="bi bi-book btn btn-primary text-center">@Localizer["ReadArticle"]</a>
                             @if (Model.CurrUser.Id == obj.User.Id || User.IsInRole("admin"))
                             {
-                                <a asp-controller="Article" asp-route-Id="@obj.Id" asp-action="Upsert" class="btn btn-primary text-center">Edit</a>
-                                <a asp-controller="Article" asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger text-center">Delete</a>
+                                <a asp-controller="Article" asp-route-Id="@obj.Id" asp-action="Change" class="bi bi-pencil btn btn-primary text-center"></a>
+                                <a asp-controller="Article" asp-route-Id="@obj.Id" asp-action="Delete" class="bi bi-trash btn btn-danger text-center"></a>
                             }
                         </div>
                     </td>
@@ -40,4 +40,7 @@ else
 {
     <p>You don't have any articles</p>
 
+}
+@section Scripts{
+<script src="~/js/SetDataTable.js"></script>
 }

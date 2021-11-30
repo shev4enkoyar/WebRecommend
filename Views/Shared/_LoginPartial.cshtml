@@ -4,18 +4,18 @@
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 
-<ul class="navbar-nav">
+<ul class="navbar-nav text-dark">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">@((await UserManager.GetUserAsync(User)).FullName)</a>
+        <li class="nav-item dropdown text-dark">
+            <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">@((await UserManager.GetUserAsync(User)).FullName)</a>
             <ul class="dropdown-menu ">
-                <li class="text-center"><a asp-route-id="@((await UserManager.GetUserAsync(User)).Id)" asp-controller="Profile" asp-action="Index" class="dropdown-item">Profile</a></li>
-                <li class="text-center"><a id="manage" class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Settings</a></li>
-                <li class="text-center"><hr class="dropdown-divider"></li>
+                <li class="text-center"><a asp-route-id="@((await UserManager.GetUserAsync(User)).Id)" asp-controller="Profile" asp-action="Index" class="dropdown-item text-dark">@Localizer["ProfileBtn"]</a></li>
+                <li class="text-center"><a id="manage" class="dropdown-item text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@Localizer["SettingsBtn"]</a></li>
+                <li class="text-center"><hr class="dropdown-divider text-dark"></li>
                 <li class="dropdown-item">
                     <form id="logoutForm" class="text-center" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                        <button id="logout" type="submit" class="dropdown-item">Logout</button>
+                        <button id="logout" type="submit" class="dropdown-item text-dark">@Localizer["LogoutBtn"]</button>
                     </form>
                 </li>
             </ul>
@@ -24,10 +24,10 @@
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">@Localizer["RegisterBtn"]</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">@Localizer["LoginBtn"]</a>
         </li>
     }
 </ul>

@@ -26,19 +26,19 @@ namespace WebRecommend.Controllers
 
         public IActionResult Index(string id)
         {
+            ProfileVM profileVM = GetProfileVM(id);
+            return View(profileVM);
+        }
 
-            var currUser = _userManager.GetUserAsync(HttpContext.User).Result;
+        private ProfileVM GetProfileVM(string userId)
+        {
             ProfileVM profileVM = new ProfileVM()
             {
-                Article = _db.Articles
-                .Include(u => u.Category)
-                .Include(u => u.User)
-                .Where(u => u.User.Id == id),
-                CurrUser = currUser,
-                AppUser = _userManager.FindByIdAsync(id).Result
+                Article = _db.Articles.Include(u => u.Category).Include(u => u.User).Where(u => u.User.Id == userId),
+                CurrUser = _userManager.GetUserAsync(User).Result,
+                AppUser = _userManager.FindByIdAsync(userId).Result
             };
-
-            return View(profileVM);
+            return profileVM;
         }
     }
 }

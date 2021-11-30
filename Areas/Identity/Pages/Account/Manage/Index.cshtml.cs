@@ -40,10 +40,10 @@ namespace WebRecommend.Areas.Identity.Pages.Account.Manage
 
         private async Task LoadAsync(AppUser user)
         {
-            var userName = await _userManager.GetUserNameAsync(user);
+            var userName = await _userManager.GetUserAsync(User);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
-            Username = userName;
+            Username = userName.FullName;
 
             Input = new InputModel
             {

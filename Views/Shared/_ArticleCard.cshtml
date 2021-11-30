@@ -1,14 +1,27 @@
 ﻿@model WebRecommend.Models.Article
 
 <div class="col filter @Model.Category.Name.Replace(" ", "_")">
-    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+    <div class="background row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
             <strong class="d-inline-block mb-2 text-primary">@Model.Category.Name</strong>
-            <h3 class="mb-0">@Model.Title</h3>
-            <div class="mb-1 text-muted">@Model.CreateDate.ToString("MMM dd") by <b>@Model.User.FullName</b></div>
+            <div class="h3 mb-0">@Model.Title</div>
+
+            @if (Model.RatingAverage != 0)
+            {
+                <div class="text-muted">
+                    @Localizer["AverageRating"] <b>@Model.RatingAverage</b>
+                </div>
+            }
+            else
+            {
+                <div class="text-muted">
+                    @Localizer["NoRating"]
+                </div>
+            }
+            <div class="mb-1 text-muted">@Localizer["CreatedBy"] @Model.CreateDate.ToString("MMM dd") <b>@Model.User.FullName</b> <i class="bi bi-caret-up"></i>@Model.User.Reputation</div>
             <p class="card-text mb-auto">@Model.Desсription</p>
             <div class="mt-1">
-                <a asp-controller="Home" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary">Читать далее</a>
+                <a asp-controller="Home" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary">@Localizer["ReadFull"]</a>
             </div>
         </div>
     </div>

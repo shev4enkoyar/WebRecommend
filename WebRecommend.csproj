@@ -7,6 +7,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="bootstrap" Version="5.1.2" />
+		<PackageReference Include="Dropbox.Api" Version="6.20.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="5.0.12" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="5.0.12" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.12" />
@@ -20,7 +21,6 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
 		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.3" />
-		<PackageReference Include="TagIt" Version="2.0.110.4" />
 	</ItemGroup>
 
 </Project>

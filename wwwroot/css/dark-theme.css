@@ -1,0 +1,18 @@
+﻿body {
+    background-color: #1f202a !important;
+    color: #e4e4e4 !important;
+}
+
+footer, nav, .dropdown-menu, input, select, table, .text {
+    background-color: #252631 !important;
+    color: #e4e4e4 !important;
+}
+
+.text-dark, h1, h2, h3, h4, h5, h6, p {
+    color: #e4e4e4 !important;
+}
+
+.background, border-bottom {
+    background-color: #252631 !important;
+    border-color: #303140 !important;
+}

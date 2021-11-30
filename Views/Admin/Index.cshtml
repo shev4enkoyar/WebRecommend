@@ -1,12 +1,17 @@
-﻿@{
-    ViewData["Title"] = "Index";
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = "Admin panel";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="container-fluid" style="max-width: 500px">
+    <div class="text-center">
+        <h1 class="display-3 mb-3 fw-normal">@Localizer["AdminPanelTitle"]</h1>
+        <a asp-action="Categories" class="btn btn-lg btn-primary w-100 mb-3">@Localizer["Categories"]</a>
+        <a asp-action="Users" class="btn btn-lg btn-primary w-100 mb-3">@Localizer["Users"]</a>
 
-<div class="col">
-    <a asp-action="Categories" class="btn btn-success w-100">Categories</a>
-    <a asp-action="Users" class="btn btn-success w-100">All users</a>
+        <a asp-controller="Article" asp-action="Index" class="btn btn-lg btn-primary w-100 mb-3">@Localizer["Articles"]</a>
+    </div>
 </div>
-

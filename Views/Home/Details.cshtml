@@ -1,19 +1,64 @@
-﻿@model WebRecommend.Models.ViewModels.DetailsVM
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
-<div class="p-4 mb-3 bg-light rounded blog-post">
-    <form method="post">
+@model WebRecommend.Models.ViewModels.DetailsVM
+
+<div class="p-4 background mb-3 bg-light rounded blog-post">
+    <div class="theme-text">
         <h2 class="blog-post-title">@Model.Article.Title</h2>
-        <p class="blog-post-meta text-secondary">@Model.Article.CreateDate.ToString("MMMM dd, yyyy") by <a asp-route-id="@Model.Article.User.Id" asp-controller="Profile" asp-action="Index">@Model.Article.User.FullName</a></p>
-        <p>@Html.Raw(Model.Article.Body)</p>
-        <div class="row">
-            @foreach (var item in Model.ArticleTag)
-            {
-                <p class="text-secondary col-md-auto text-opacity-25">
-                    @item.Tag.Name
-                </p>
-            }
-        </div>
+        @if (Model.Article.RatingAverage != 0)
+        {
+            <p class="bi bi-star-fill">@Model.Article.RatingAverage</p>
+        }
+        <p class="blog-post-meta text-secondary">@Localizer["CreatedBy"] @Model.Article.CreateDate.ToString("MMMM dd, yyyy") <a asp-route-id="@Model.Article.User.Id" asp-controller="Profile" asp-action="Index">@Model.Article.User.FullName</a><b class="bi bi-caret-up">@Model.Article.User.Reputation</b></p>
+        <p>
+            @Html.Raw(Model.Article.Body)
+        </p>
+        <p>
+            <div class="row text-secondary text-opacity-50">
+                @Localizer["Tags"]
+                @foreach (var item in Model.ArticleTag)
+                {
+                    <p class="text-secondary col-md-auto text-opacity-75">
+                        @item.Tag.Name
+                    </p>
+                }
+            </div>
+        </p>
 
-        <a asp-action="Index" class="btn btn-success btn-square form-control btn-lg">Back to other articles</a>
-    </form>
+    </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form asp-action="DetailsRating" method="post" class="row">
+            <input asp-for="Article.Id" hidden />
+
+            <div class="rate text-dark mt-3">
+                <div class="rating">
+                    <input asp-for="Rating.Grade" type="radio" value="5" id="5" onchange="this.form.submit();">
+                    <label for="5">☆</label>
+                    <input asp-for="Rating.Grade" type="radio" value="4" id="4" onchange="this.form.submit();">
+                    <label for="4">☆</label>
+                    <input asp-for="Rating.Grade" type="radio" value="3" id="3" onchange="this.form.submit();">
+                    <label for="3">☆</label>
+                    <input asp-for="Rating.Grade" type="radio" value="2" id="2" onchange="this.form.submit();">
+                    <label for="2">☆</label>
+                    <input asp-for="Rating.Grade" type="radio" value="1" id="1" onchange="this.form.submit();">
+                    <label for="1">☆</label>
+                </div>
+            </div>
+        </form>
+
+        <form asp-action="DetailsReputation" method="post">
+            <input asp-for="Article.Id" hidden />
+            <input asp-for="Article.UserId" hidden />
+            <div>
+                @if (Model.Reputation == null)
+                {
+                    <button type="submit" class="btn btn-success btn-sm">@Localizer["PlusRepForUser"] @Model.Article.User.FullName</button>
+                }
+            </div>
+        </form>
+
+    }
+
 </div>

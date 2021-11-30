@@ -1,19 +1,13 @@
 ﻿@model WebRecommend.Models.ViewModels.ArticleVM
 
-@{
-    var title = "Create article";
-}
-
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     @if (Model.Article.Id != 0)
     {
-        title = "Edit article";
         <input asp-for="Article.Id" hidden />
         <input asp-for="Article.CreateDate" hidden />
     }
-    <div class="border p-3">
+    <div class="border p-3 background">
         <div class="form-group row">
-            <h2 class="text-alert-info pl-3">@title</h2>
         </div>
         <div class="row">
             <div class="col-8">
@@ -25,7 +19,7 @@
                         </div>
                         <div class="col-8">
                             <select asp-for="Article.UserId" asp-items="@Model.UsersSelectList" class="form-select">
-                                <option disabled selected>--Select user--</option>
+                                <option disabled selected>@Localizer["SelectUserTitle"]</option>
                             </select>
                             <span asp-validation-for="Article.UserId" class="text-danger"></span>
                         </div>
@@ -47,21 +41,20 @@
 
                 <div class="form-group row mb-3">
                     <div class="col-4">
-                        <label>Tags</label>
+                        <label>@Localizer["TagsTitle"]</label>
                     </div>
                     <div class="col-8">
                         <input asp-for="ArticleTagLine" readonly class="allTags form-control mb-1" />
-                        <input onkeypress="noDigits(event)" class="enterPress form-control" list="datalistOptions" id="exampleDataList" placeholder="Enter tag name..." />
+                        <input onkeypress="noDigits(event)" class="enterPress form-control" list="datalistOptions" id="exampleDataList" placeholder="@Localizer["TagPlaceholder"]" />
                         <datalist id="datalistOptions">
-                            @foreach (var obj in Model.Tags)
+                            @foreach (var line in Model.Tags)
                             {
-                                <option value="@obj.Name"></option>
+                                <option value="@line.Name"></option>
                             }
+
                         </datalist>
                     </div>
                 </div>
-
-
 
                 <div class="form-group row mb-3">
                     <div class="col-4">
@@ -102,16 +95,16 @@
                         <div class="col">
                             @if (Model.Article.Id != 0)
                             {
-                                <input type="submit" class="btn btn-info w-100" value="Update" />
+                                <input type="submit" class="btn btn-info w-100" value="@Localizer["UpdateBtn"]" />
                             }
                             else
                             {
-                                <input type="submit" onclick="return validateInput()" class="btn btn-primary w-100" value="Create" />
+                                <input type="submit" onclick="return validateInput()" class="btn btn-primary w-100" value="@Localizer["CreateBtn"]" />
                             }
 
                         </div>
                         <div class="col">
-                            <a asp-action="Index" class="btn btn-success w-100">Back</a>
+                            <a asp-action="Index" class="btn btn-success w-100">@Localizer["CancelBtn"]</a>
                         </div>
                     </div>
                 </div>
@@ -126,6 +119,9 @@
 <script>
     $(document).ready(function() {
         $('.summernote').summernote({
+            codemirror: {
+                mode: 'text/html',
+            },
             toolbar: [
                 ['style', ['style']],
                 ['font', ['bold', 'underline','italic','strikethrough', 'clear']],
@@ -137,8 +133,33 @@
                 ['view', ['hr', 'help']],
             ],
             height:250,
+            callbacks: {
+                    onImageUpload: function (files, editor, welEditable) {
+                        uploadImageToS3ForSummerNote(files[0], editor, welEditable);
+                    }
+                }
         });
     });
+    function uploadImageToS3ForSummerNote(file, editor, welEditable) {
+        let html = $('.summernote').summernote('code');
+        var url = '@Url.Action("UploadFile")';
+        formData = new FormData();
+        formData.append("file", file);
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $('.summernote').summernote('code', html + '<img src="' + data.fileUrl + '"/>');
+            },
+            error: function (data) {
+                alert(data.responseText);
+            }
+        });
+        };
 </script>
 <script>
     $(document).ready(function() {
