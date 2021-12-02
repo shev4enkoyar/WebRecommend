@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<AppUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -46,7 +49,15 @@
                             </form>
                         </li>
                     </ul>
-                    @if (User.IsInRole("admin") || User.IsInRole("user"))
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (!(UserManager.GetUserAsync(User).Result.EmailConfirmed))
+                        {
+                            <a id="manage" class="nav-link text-danger" asp-area="Identity" asp-page="/Account/Manage/Email">@Localizer["ConfirmEmailBtn"]</a>
+                        }
+                    }
+
+                    @if (User.IsInRole("admin") || (User.IsInRole("user") && (UserManager.GetUserAsync(User).Result.EmailConfirmed)))
                     {
                         <div class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Article" asp-action="Change">@Localizer["CreateArticleBtn"]</a>

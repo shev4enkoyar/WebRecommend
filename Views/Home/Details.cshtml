@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<AppUser> UserManager
 
 @model WebRecommend.Models.ViewModels.DetailsVM
 
@@ -31,7 +33,7 @@
         </p>
 
     </div>
-    @if (User.IsInRole("admin") || User.IsInRole("user"))
+    @if (User.IsInRole("admin") || (User.IsInRole("user") && (UserManager.GetUserAsync(User).Result.EmailConfirmed)))
     {
         <form asp-action="DetailsRating" method="post" class="row">
             <input asp-for="Article.Id" hidden />

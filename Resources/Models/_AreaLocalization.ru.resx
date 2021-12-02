@@ -208,4 +208,28 @@
   <data name="CreateAccountInfo" xml:space="preserve">
     <value>Создание нового аккаунта</value>
   </data>
+  <data name="SubmitBtn" xml:space="preserve">
+    <value>Отправить</value>
+  </data>
+  <data name="ForgotPassConfTitle" xml:space="preserve">
+    <value>Подтвердите что это ваш аккаунт</value>
+  </data>
+  <data name="ForgotPassInfo" xml:space="preserve">
+    <value>Пожалуйста проверьте почтовый ящик для сброса пароля</value>
+  </data>
+  <data name="ResetPassTitle" xml:space="preserve">
+    <value>Сброс пароля</value>
+  </data>
+  <data name="ResetPassInfoOne" xml:space="preserve">
+    <value>Ваш пароль был сброшен. Пожалуйста</value>
+  </data>
+  <data name="ResetPassInfoTwo" xml:space="preserve">
+    <value>нажмите здесь для входа</value>
+  </data>
+  <data name="SetPassTitle" xml:space="preserve">
+    <value>Установите ваш пароль</value>
+  </data>
+  <data name="SetPassInfo" xml:space="preserve">
+    <value>У вас нет локального имени пользователя / пароля для этого сайта. Добавьте локальную учетную запись, чтобы вы могли войти в систему без внешнего входа.</value>
+  </data>
 </root>

@@ -60,6 +60,8 @@ namespace WebRecommend
                     googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
                 });
 
+            services.AddTransient<IEmailSender, EmailSender>();
+
             services.AddHttpContextAccessor();
 
 

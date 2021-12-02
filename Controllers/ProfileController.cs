@@ -12,7 +12,6 @@ using WebRecommend.Models.ViewModels;
 
 namespace WebRecommend.Controllers
 {
-    [Authorize]
     public class ProfileController : Controller
     {
         private readonly ApplicationDbContext _db;

@@ -10,7 +10,6 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using WebRecommend.Data;
 using WebRecommend.Models;
@@ -41,6 +40,10 @@ namespace WebRecommend.Controllers
 
         public IActionResult Change(int? id)
         {
+            if (!isConfirmedEmail())
+            {
+                return NotFound();
+            }
             ArticleVM articleVM = GetArticleVM();
             if (id == null)
             {
@@ -260,6 +263,11 @@ namespace WebRecommend.Controllers
                     return sharLink.Url.ToString().TrimEnd('0') + "1";
                 }
             }
+        }
+
+        private bool isConfirmedEmail()
+        {
+            return _userManager.GetUserAsync(User).Result.EmailConfirmed;
         }
     }
 }

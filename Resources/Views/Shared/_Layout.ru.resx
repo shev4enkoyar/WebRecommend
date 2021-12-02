@@ -106,4 +106,7 @@
   <data name="AdminPanelBtn" xml:space="preserve">
     <value>Панель админа</value>
   </data>
+  <data name="ConfirmEmailBtn" xml:space="preserve">
+    <value>Пожалуйста подтвердите email</value>
+  </data>
 </root>
