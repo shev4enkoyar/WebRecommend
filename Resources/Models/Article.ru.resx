@@ -112,4 +112,7 @@
   <data name="UserId" xml:space="preserve">
     <value>Пользователь</value>
   </data>
+  <data name="AuthorMark" xml:space="preserve">
+    <value>Оценка автора</value>
+  </data>
 </root>

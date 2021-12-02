@@ -115,4 +115,13 @@
   <data name="ToProfileBtn" xml:space="preserve">
     <value>To profile</value>
   </data>
+  <data name="EditRoleBtn" xml:space="preserve">
+    <value>Edit role</value>
+  </data>
+  <data name="DeleteUserBtn" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="IsLockout" xml:space="preserve">
+    <value>Deleted?</value>
+  </data>
 </root>

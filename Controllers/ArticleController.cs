@@ -2,6 +2,7 @@
 using Dropbox.Api.Files;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,21 +18,21 @@ using WebRecommend.Models.ViewModels;
 
 namespace WebRecommend.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin,user")]
     public class ArticleController : Controller
     {
         private readonly ApplicationDbContext _db;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly UserManager<AppUser> _userManager;
         public IConfiguration Configuration { get; }
 
-        public ArticleController(ApplicationDbContext db, IHttpContextAccessor httpContextAccessor, IConfiguration configuration)
+        public ArticleController(ApplicationDbContext db, IConfiguration configuration, UserManager<AppUser> userManager)
         {
             _db = db;
-            _httpContextAccessor = httpContextAccessor;
             Configuration = configuration;
+            _userManager = userManager;
         }
 
-
+        [Authorize(Roles = "admin")]
         public IActionResult Index()
         {
             IEnumerable<Article> articles = _db.Articles.Include(u => u.Category).Include(u => u.User);
@@ -52,7 +53,15 @@ namespace WebRecommend.Controllers
                 {
                     return NotFound();
                 }
-                return View(articleVM);
+                if (articleVM.Article.UserId == _userManager.GetUserId(User) || User.IsInRole("admin"))
+                {
+                    return View(articleVM);
+                }
+                else
+                {
+                    return NotFound();
+                }
+
             }
         }
 
@@ -115,7 +124,7 @@ namespace WebRecommend.Controllers
             articleVM.Article.CreateDate = DateTime.UtcNow;
             if (articleVM.Article.UserId == null)
             {
-                articleVM.Article.UserId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                articleVM.Article.UserId = _userManager.GetUserId(User);
             }
             _db.Articles.Add(articleVM.Article);
         }
@@ -138,6 +147,10 @@ namespace WebRecommend.Controllers
                 var oldTags = inputTags.Intersect(allTags).ToList();
                 AddOldTags(oldTags, articleVM);
                 _db.SaveChanges();
+            }
+            else
+            {
+                DeleteOldTags(articleVM);
             }
         }
 
@@ -191,7 +204,12 @@ namespace WebRecommend.Controllers
                 return NotFound();
             }
 
-            return View(product);
+            if (product.UserId == _userManager.GetUserId(User) || User.IsInRole("admin"))
+            {
+                return View(product);
+            }
+
+            return NotFound();
         }
 
         [HttpPost, ActionName("Delete")]
@@ -207,6 +225,8 @@ namespace WebRecommend.Controllers
             return Redirect("~/Home/Index");
 
         }
+
+
 
         [HttpPost]
         public async Task<IActionResult> UploadFile(IFormFile file)

@@ -14,6 +14,6 @@ namespace WebRecommend.Models.ViewModels
 
         public AppUser AppUser { get; set; }
 
-        public IEnumerable<Comment> Comment { get; set; }
+        public Comment Comment { get; set; }
     }
 }

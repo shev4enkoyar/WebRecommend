@@ -1,9 +1,8 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer Localizer
+﻿@using Microsoft.AspNetCore.Http;
 
 @model WebRecommend.Models.ViewModels.DetailsVM
 
-<div class="p-4 background mb-3 bg-light rounded blog-post">
+<div id="app" class="p-4 background mb-3 bg-light rounded blog-post">
     <div class="theme-text">
         <h2 class="blog-post-title">@Model.Article.Title</h2>
         @if (Model.Article.RatingAverage != 0)
@@ -14,6 +13,11 @@
         <p>
             @Html.Raw(Model.Article.Body)
         </p>
+        <p>
+            <h6>@Localizer["AuthorMark"] @Model.Article.AuthorMark</h6>
+        </p>
+
+
         <p>
             <div class="row text-secondary text-opacity-50">
                 @Localizer["Tags"]
@@ -27,7 +31,7 @@
         </p>
 
     </div>
-    @if (User.Identity.IsAuthenticated)
+    @if (User.IsInRole("admin") || User.IsInRole("user"))
     {
         <form asp-action="DetailsRating" method="post" class="row">
             <input asp-for="Article.Id" hidden />
@@ -58,7 +62,5 @@
                 }
             </div>
         </form>
-
     }
-
 </div>

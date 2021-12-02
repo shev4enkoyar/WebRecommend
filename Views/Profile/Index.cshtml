@@ -1,6 +1,15 @@
 ﻿@model WebRecommend.Models.ViewModels.ProfileVM
 
-<h1>@Model.AppUser.FullName <i class="bi bi-caret-up"></i>@Model.AppUser.Reputation</h1>
+
+@if (Model.AppUser.LockoutEnabled)
+{
+    <h1><del>@Model.AppUser.FullName</del> <i class="bi bi-caret-up"></i>@Model.AppUser.Reputation</h1>
+    <p>@Localizer["UserDeletedInfo"]</p>
+}
+else
+{
+    <h1>@Model.AppUser.FullName <i class="bi bi-caret-up"></i>@Model.AppUser.Reputation</h1>
+}
 
 @if (Model.Article.Count() > 0)
 {
@@ -34,11 +43,6 @@
             }
         </tbody>
     </table>
-
-}
-else
-{
-    <p>You don't have any articles</p>
 
 }
 @section Scripts{

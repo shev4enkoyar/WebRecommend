@@ -24,6 +24,10 @@ namespace WebRecommend.Models
 
         public DateTime CreateDate { get; set; }
 
+        [Display(Name = "AuthorMark")]
+        public int AuthorMark { get; set; }
+
+        [Required]
         public double RatingAverage { get; set; }
 
         [Display(Name = "UserId")]

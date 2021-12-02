@@ -106,4 +106,7 @@
   <data name="PlusRepForUser" xml:space="preserve">
     <value>Повысить репутацию</value>
   </data>
+  <data name="AuthorMark" xml:space="preserve">
+    <value>Оценка автора:</value>
+  </data>
 </root>

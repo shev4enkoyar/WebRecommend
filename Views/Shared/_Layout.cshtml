@@ -46,7 +46,7 @@
                             </form>
                         </li>
                     </ul>
-                    @if (User.Identity.IsAuthenticated)
+                    @if (User.IsInRole("admin") || User.IsInRole("user"))
                     {
                         <div class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Article" asp-action="Change">@Localizer["CreateArticleBtn"]</a>

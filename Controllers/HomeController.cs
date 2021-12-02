@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -145,6 +146,7 @@ namespace WebRecommend.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin,user")]
         public IActionResult DetailsReputation(DetailsVM detailsVM)
         {
             var articleId = detailsVM.Article.Id;
@@ -179,6 +181,7 @@ namespace WebRecommend.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin,user")]
         public IActionResult DetailsRating(DetailsVM detailsVM)
         {
             var articleId = detailsVM.Article.Id;

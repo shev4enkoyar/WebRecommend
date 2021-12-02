@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model WebRecommend.Models.ViewModels.ChangeRoleVM
+
+<h2>@Localizer["ChangeUserRoleTitle"] @Model.UserEmail</h2>
+
+<form asp-action="UsersEditRole" method="post">
+    <input type="hidden" name="userId" value="@Model.UserId" />
+    <div class="form-group">
+        @foreach (IdentityRole role in Model.AllRoles)
+        {
+            <input type="radio" name="roles" value="@role.Name"
+               @(Model.UserRoles.Contains(role.Name) ? "checked=\"checked\"" : "") />
+            @role.Name <br />
+        }
+    </div>
+    <button type="submit" class="btn btn-primary">@Localizer["SaveBtn"]</button>
+</form>

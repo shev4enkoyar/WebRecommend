@@ -112,4 +112,7 @@
   <data name="UserId" xml:space="preserve">
     <value>User</value>
   </data>
+  <data name="AuthorMark" xml:space="preserve">
+    <value>Author mark</value>
+  </data>
 </root>

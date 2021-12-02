@@ -115,4 +115,7 @@
   <data name="SelectUserTitle" xml:space="preserve">
     <value>--Select user--</value>
   </data>
+  <data name="ClearBtn" xml:space="preserve">
+    <value>Clear tag</value>
+  </data>
 </root>

@@ -1,8 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using WebRecommend.Data;
 using WebRecommend.Models;
+using WebRecommend.Models.ViewModels;
 
 namespace WebRecommend.Controllers
 {
@@ -10,11 +15,14 @@ namespace WebRecommend.Controllers
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<AppUser> _userManager;
 
-        public AdminController(ApplicationDbContext db)
+        public AdminController(ApplicationDbContext db, RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager)
         {
             _db = db;
-
+            _roleManager = roleManager;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
@@ -104,6 +112,62 @@ namespace WebRecommend.Controllers
         {
             IEnumerable<AppUser> appUsers = _db.ApplicationUsers;
             return View(appUsers);
+        }
+
+        public async Task<IActionResult> UsersEditRole(string userId)
+        {
+            // получаем пользователя
+            AppUser user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                // получем список ролей пользователя
+                var userRoles = await _userManager.GetRolesAsync(user);
+                var allRoles = _roleManager.Roles.ToList();
+                ChangeRoleVM model = new ChangeRoleVM
+                {
+                    UserId = user.Id,
+                    UserEmail = user.Email,
+                    UserRoles = userRoles,
+                    AllRoles = allRoles
+                };
+                return View(model);
+            }
+
+            return NotFound();
+        }
+        [HttpPost]
+        public async Task<IActionResult> UsersEditRole(string userId, List<string> roles)
+        {
+            AppUser user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                var userRoles = await _userManager.GetRolesAsync(user);
+                var addedRoles = roles.Except(userRoles);
+                var removedRoles = userRoles.Except(roles);
+                await _userManager.AddToRolesAsync(user, addedRoles);
+                await _userManager.RemoveFromRolesAsync(user, removedRoles);
+                return RedirectToAction("Users");
+            }
+
+            return NotFound();
+        }
+
+        public async Task<IActionResult> UsersDelete(string userId)
+        {
+            AppUser user = await _userManager.FindByIdAsync(userId);
+            if (user.LockoutEnabled)
+            {
+                user.LockoutEnabled = false;
+                user.LockoutEnd = null;
+                await _userManager.UpdateAsync(user);
+            }
+            else
+            {
+                user.LockoutEnabled = true;
+                user.LockoutEnd = DateTime.Now.AddYears(100);
+                await _userManager.UpdateAsync(user);
+            }
+            return RedirectToAction("Users");
         }
     }
 }

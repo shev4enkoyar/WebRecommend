@@ -115,4 +115,7 @@
   <data name="SelectUserTitle" xml:space="preserve">
     <value>--Выберите пользователя--</value>
   </data>
+  <data name="ClearBtn" xml:space="preserve">
+    <value>Очистить теги</value>
+  </data>
 </root>

@@ -115,4 +115,13 @@
   <data name="ToProfileBtn" xml:space="preserve">
     <value>К профилю</value>
   </data>
+  <data name="EditRoleBtn" xml:space="preserve">
+    <value>Изменить роли</value>
+  </data>
+  <data name="DeleteUserBtn" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="IsLockout" xml:space="preserve">
+    <value>Удален?</value>
+  </data>
 </root>

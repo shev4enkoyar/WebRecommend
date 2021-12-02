@@ -106,4 +106,7 @@
   <data name="PlusRepForUser" xml:space="preserve">
     <value>+Rep for</value>
   </data>
+  <data name="AuthorMark" xml:space="preserve">
+    <value>Author mark:</value>
+  </data>
 </root>

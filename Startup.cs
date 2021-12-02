@@ -40,7 +40,10 @@ namespace WebRecommend
                 options.UseMySql(connectionString, serverVersion);
             });
 
-            services.AddIdentity<AppUser, IdentityRole>()
+            services.AddIdentity<AppUser, IdentityRole>(options =>
+            {
+                options.Lockout.AllowedForNewUsers = false;
+            })
                 .AddDefaultTokenProviders()
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -58,6 +61,8 @@ namespace WebRecommend
                 });
 
             services.AddHttpContextAccessor();
+
+
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddControllersWithViews()

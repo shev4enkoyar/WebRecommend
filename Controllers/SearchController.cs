@@ -23,6 +23,7 @@ namespace WebRecommend.Controllers
             {
                 return View(searchVM);
             }
+
             search_query = search_query.Trim();
             if (search_query != null && search_query.Length > 0)
             {

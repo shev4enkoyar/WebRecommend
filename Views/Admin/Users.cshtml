@@ -10,6 +10,7 @@
                 <td class="text text-monospace col">@Localizer["Name"]</td>
                 <td class="text text-monospace col">@Localizer["Email"]</td>
                 <td class="text text-monospace col">@Localizer["Reputation"]</td>
+                <td class="text text-monospace col">@Localizer["IsLockout"]</td>
                 <td></td>
             </tr>
         </thead>
@@ -21,9 +22,12 @@
                     <td>@obj.FullName</td>
                     <td>@obj.Email</td>
                     <td>@obj.Reputation</td>
+                    <td>@obj.LockoutEnabled</td>
                     <td class="text-center">
                         <div class="btn-group" role="group">
                             <a asp-controller="Profile" asp-route-Id="@obj.Id" asp-action="Index" class="btn btn-primary text-center">@Localizer["ToProfileBtn"]</a>
+                            <a asp-route-userId="@obj.Id" asp-action="UsersEditRole" class="btn btn-primary text-center">@Localizer["EditRoleBtn"]</a>
+                            <a asp-route-userId="@obj.Id" asp-action="UsersDelete" class="btn btn-danger text-center">@Localizer["DeleteUserBtn"]</a>
                         </div>
                     </td>
                 </tr>

@@ -26,6 +26,7 @@ namespace WebRecommend.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
+
         public RegisterModel(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
@@ -76,6 +77,10 @@ namespace WebRecommend.Areas.Identity.Pages.Account
             if (!await _roleManager.RoleExistsAsync(WebConst.UserRole))
             {
                 await _roleManager.CreateAsync(new IdentityRole(WebConst.UserRole));
+            }
+            if (!await _roleManager.RoleExistsAsync(WebConst.BannedUser))
+            {
+                await _roleManager.CreateAsync(new IdentityRole(WebConst.BannedUser));
             }
 
             ReturnUrl = returnUrl;
