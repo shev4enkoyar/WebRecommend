@@ -1,5 +1,6 @@
 # WebRecommend
-Course project "SITE FOR MANAGING RECOMMENDATIONS"
+
+[WebRecommend](https://coffemint.space/) - Ссылка на сайт
 
 Аккаунты
 | Логин  | Пароль | Роль |
