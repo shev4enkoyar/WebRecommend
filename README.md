@@ -1,6 +1,14 @@
 # WebRecommend
 Course project "SITE FOR MANAGING RECOMMENDATIONS"
 
+Аккаунты
+| Логин  | Пароль | Роль |
+| ------------- | :-------------: | :-------------: |
+| admin@gmail.com  | 123Admin!  | Admin |
+| user@gmail.com  | 123User!  | User |
+| banned@gmail.com  | 123Banned!  | Banned |
+| deleted@gmail.com  | 123Deleted!  | Deleted |
+
 Основные задачи
 | Задача  | Статус |
 | ------------- | :-------------: |
