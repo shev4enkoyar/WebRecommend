@@ -32,18 +32,21 @@ else
                     <td class="text-center">
                         <div class="btn-group" role="group">
                             <a asp-controller="Home" asp-route-Id="@obj.Id" asp-action="Details" class="bi bi-book btn btn-primary text-center">@Localizer["ReadArticle"]</a>
-                            @if (Model.CurrUser.Id == obj.User.Id || User.IsInRole("admin"))
+                            @if (User.Identity.IsAuthenticated)
                             {
-                                <a asp-controller="Article" asp-route-Id="@obj.Id" asp-action="Change" class="bi bi-pencil btn btn-primary text-center"></a>
-                                <a asp-controller="Article" asp-route-Id="@obj.Id" asp-action="Delete" class="bi bi-trash btn btn-danger text-center"></a>
+                                if (Model.CurrUser.Id == obj.User.Id || User.IsInRole("admin"))
+                                {
+                                    <a asp-controller="Article" asp-route-Id="@obj.Id" asp-action="Change" class="bi bi-pencil btn btn-primary text-center"></a>
+                                    <a asp-controller="Article" asp-route-Id="@obj.Id" asp-action="Delete" class="bi bi-trash btn btn-danger text-center"></a>
+                                }
                             }
+
                         </div>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-
 }
 @section Scripts{
 <script src="~/js/SetDataTable.js"></script>
