@@ -1,7 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer Localizer
-
-@model WebRecommend.Models.ViewModels.HomeVM
+﻿@model WebRecommend.Models.ViewModels.HomeVM
 
 @{
     ViewData["Title"] = "Home Page";
@@ -57,7 +54,6 @@
             {
                 $(".filter").not('.'+value).hide('3000');
                 $('.filter').filter('.'+value).show('3000');
-
             }
         });
     });

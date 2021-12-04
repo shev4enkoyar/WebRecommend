@@ -1,7 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer Localizer
-
-@{
+﻿@{
     ViewData["Title"] = "Admin panel";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -11,7 +8,6 @@
         <h1 class="display-3 mb-3 fw-normal">@Localizer["AdminPanelTitle"]</h1>
         <a asp-action="Categories" class="btn btn-lg btn-primary w-100 mb-3">@Localizer["Categories"]</a>
         <a asp-action="Users" class="btn btn-lg btn-primary w-100 mb-3">@Localizer["Users"]</a>
-
         <a asp-controller="Article" asp-action="Index" class="btn btn-lg btn-primary w-100 mb-3">@Localizer["Articles"]</a>
     </div>
 </div>

@@ -14,14 +14,16 @@ namespace WebRecommend
             Configuration = configuration;
         }
 
-        public async Task SendEmailAsync(string email, string subject, string htmlMessage)
+        public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
             string fromMail = Configuration["Mail:Addres"];
             string fromPassword = Configuration["Mail:AppPassword"];
 
-            MailMessage message = new MailMessage();
-            message.From = new MailAddress(fromMail);
-            message.Subject = subject;
+            MailMessage message = new()
+            {
+                From = new MailAddress(fromMail),
+                Subject = subject
+            };
             message.To.Add(new MailAddress(email));
             message.Body = "<html><body> " + htmlMessage + " </body></html>";
             message.IsBodyHtml = true;
@@ -33,6 +35,7 @@ namespace WebRecommend
                 EnableSsl = true,
             };
             smtpClient.Send(message);
+            return Task.CompletedTask;
         }
     }
 }

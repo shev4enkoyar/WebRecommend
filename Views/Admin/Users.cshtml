@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<WebRecommend.Models.AppUser>
+
 <div class="container p-3">
     <div class="row">
         <h2 class="text-alert-info pl-3">@Localizer["UsersTitle"]</h2>
@@ -10,6 +11,7 @@
                 <td class="text text-monospace col">@Localizer["Name"]</td>
                 <td class="text text-monospace col">@Localizer["Email"]</td>
                 <td class="text text-monospace col">@Localizer["Reputation"]</td>
+                <td class="text text-monospace col">@Localizer["IsEmailConfirmed"]</td>
                 <td class="text text-monospace col">@Localizer["IsLockout"]</td>
                 <td></td>
             </tr>
@@ -22,6 +24,7 @@
                     <td>@obj.FullName</td>
                     <td>@obj.Email</td>
                     <td>@obj.Reputation</td>
+                    <td>@obj.EmailConfirmed</td>
                     <td>@obj.LockoutEnabled</td>
                     <td class="text-center">
                         <div class="btn-group" role="group">
@@ -35,6 +38,7 @@
         </tbody>
     </table>
 </div>
+
 @section Scripts{
 <script src="~/js/SetDataTable.js"></script>
 }

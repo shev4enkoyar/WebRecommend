@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using WebRecommend.Data;
 using WebRecommend.Models;
 using WebRecommend.Models.ViewModels;
@@ -31,7 +27,7 @@ namespace WebRecommend.Controllers
 
         private ProfileVM GetProfileVM(string userId)
         {
-            ProfileVM profileVM = new ProfileVM()
+            ProfileVM profileVM = new()
             {
                 Article = _db.Articles.Include(u => u.Category).Include(u => u.User).Where(u => u.User.Id == userId),
                 CurrUser = _userManager.GetUserAsync(User).Result,

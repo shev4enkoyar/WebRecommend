@@ -11,6 +11,7 @@ namespace WebRecommend.Controllers
     public class SearchController : Controller
     {
         private readonly ApplicationDbContext _db;
+
         public SearchController(ApplicationDbContext db)
         {
             _db = db;

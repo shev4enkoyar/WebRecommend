@@ -1,6 +1,6 @@
 ﻿namespace WebRecommend.Models
 {
-    public class _AreaLocalization
+    public class AreaLocalization
     {
     }
 }

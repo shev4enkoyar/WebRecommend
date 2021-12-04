@@ -1,7 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer Localizer
-
-@model WebRecommend.Models.Category
+﻿@model WebRecommend.Models.Category
 
 <form method="post" asp-action="CategoryCreate">
     <div class="border p-3">
@@ -38,7 +35,5 @@
 
 @section Scripts
 {
-    @{
-    <partial name="_ValidationScriptsPartial" />
-}
+<partial name="_ValidationScriptsPartial" />
 }

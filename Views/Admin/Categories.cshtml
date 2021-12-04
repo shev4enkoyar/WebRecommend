@@ -1,7 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer Localizer
-
-@model IEnumerable<WebRecommend.Models.Category>
+﻿@model IEnumerable<WebRecommend.Models.Category>
 
 <div class="container p-3">
     <div class="row pt-4">
@@ -16,22 +13,23 @@
 
     @if (Model.Count() > 0)
     {
-        <table id="dataTable" class="table table-bordered w-100">
+        <table i d="dataTable" class="table table-bordered w-100">
             <thead>
                 <tr>
-                    <td class="text text-monospace">Category name</td>
-                    <td class="text-center"><a asp-controller="Admin" asp-action="CategoryCreate" class="btn btn-primary">@Localizer["AddNewCategoryBtn"]</a></td>
+                    <td clas s="text text-monospace">Category name</td>
+                    <td clas s="text-center"><a asp-controller="Admin" asp-action="CategoryCreate" class="btn btn-primary">@Localizer["AddNewCategoryBtn"]</a></td>
                 </tr>
             </thead>
             <tbody>
+
                 @foreach (var obj in Model)
                 {
                     <tr>
                         <td width="75%">@obj.Name</td>
                         <td class="text-center">
                             <div class="btn-group" role="group">
-                                <a asp-controller="Admin" asp-route-Id="@obj.Id" asp-action="CategoryEdit" class="btn btn-primary text-center">@Localizer["EditBtn"]</a>
-                                <a asp-controller="Admin" asp-route-Id="@obj.Id" asp-action="CategoryDelete" class="btn btn-danger text-center">@Localizer["DeleteBtn"]</a>
+                                <a asp-controlle r="Admin" asp-route-Id="@obj.Id" asp-action="CategoryEdit" class="btn btn-primary text-center">@Localizer["EditBtn"]</a>
+                                <a asp-controlle r="Admin" asp-route-Id="@obj.Id" asp-action="CategoryDelete" class="btn btn-danger text-center">@Localizer["DeleteBtn"]</a>
                             </div>
                         </td>
                     </tr>
@@ -42,7 +40,6 @@
     else
     {
         <p>No categories</p>
-
     }
 
 </div>

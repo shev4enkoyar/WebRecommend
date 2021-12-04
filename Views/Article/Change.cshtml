@@ -127,20 +127,16 @@
 @section Scripts
 {
 <partial name="_ValidationScriptsPartial" />
+<script src="~/js/ClearTagsBtn.js"></script>
 <script>
-    document.getElementById("clearButton").onclick = function(e) {
-            document.getElementById("allTags").value = "";
-    }
-</script>
-<script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.summernote').summernote({
             codemirror: {
                 mode: 'text/html',
             },
             toolbar: [
                 ['style', ['style']],
-                ['font', ['bold', 'underline','italic','strikethrough', 'clear']],
+                ['font', ['bold', 'underline', 'italic', 'strikethrough', 'clear']],
                 ['fontname', ['fontname']],
                 ['color', ['color']],
                 ['para', ['ul', 'ol', 'paragraph', 'height']],
@@ -148,12 +144,12 @@
                 ['insert', ['link']],
                 ['view', ['hr', 'help']],
             ],
-            height:250,
+            height: 250,
             callbacks: {
-                    onImageUpload: function (files, editor, welEditable) {
-                        uploadImageToS3ForSummerNote(files[0], editor, welEditable);
-                    }
+                onImageUpload: function (files, editor, welEditable) {
+                    uploadImageToS3ForSummerNote(files[0], editor, welEditable);
                 }
+            }
         });
     });
     function uploadImageToS3ForSummerNote(file, editor, welEditable) {
@@ -175,42 +171,9 @@
                 alert(data.responseText);
             }
         });
-        };
+    };
 </script>
-
-<script>
-    $(document).ready(function() {
-        $(".enterPress").keypress(function(e) {
-            if (e.which == 32) {
-                var input = $(".enterPress").val();
-                if(input == " " || input == "") {
-                    return false;
-                }
-                else {
-                    var tags = $(".allTags").val().split(' ');
-                    if(!tags.includes(input)) {
-                        var allTag = $(".allTags").val();
-                        $(".allTags").val(allTag + " " + input);
-                        $(".enterPress").val('');
-                    }
-                    else {
-                        $(".enterPress").val('');
-                    }
-
-                }
-                return false;
-            }
-        });
-    });
-</script>
-<script>
-    function noDigits(event) {
-        if ("abcdefghijklmnopqrstuvwxyz".indexOf(event.key) != -1) {
-        }
-        else {
-            event.preventDefault();
-        }
-    }
-</script>
+<script src="~/js/AddTagByPress.js"></script>
+<script src="~/js/InputNoDigits.js"></script>
 }
 

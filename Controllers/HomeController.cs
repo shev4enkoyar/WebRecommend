@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using WebRecommend.Data;
 using WebRecommend.Models;
 using WebRecommend.Models.ViewModels;
@@ -34,7 +33,6 @@ namespace WebRecommend.Controllers
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1), IsEssential = true }
             );
-
             return LocalRedirect(returnUrl);
         }
 
@@ -67,10 +65,8 @@ namespace WebRecommend.Controllers
                 Categories = _db.Categories,
                 Tags = _db.Tags
             };
-
             ViewBag.RatingSort = sortOn == SortState.RatingDesc ? SortState.RatingAsc : SortState.RatingDesc;
             ViewBag.DateSort = sortOn == SortState.DateDesc ? SortState.DateAsc : SortState.DateDesc;
-
             var articles = _db.Articles.Include(u => u.Category).Include(u => u.User).OrderByDescending(u => u.RatingAverage);
             homeVM.Articles = SortArticles(sortOn, articles);
             return View(homeVM);
@@ -91,7 +87,6 @@ namespace WebRecommend.Controllers
                 default:
                     goto case SortState.RatingAsc;
             }
-
         }
 
         private void DeleteUnusedTags()
@@ -232,6 +227,5 @@ namespace WebRecommend.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
     }
 }

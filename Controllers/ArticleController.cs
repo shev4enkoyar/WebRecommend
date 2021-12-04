@@ -40,7 +40,7 @@ namespace WebRecommend.Controllers
 
         public IActionResult Change(int? id)
         {
-            if (!isConfirmedEmail())
+            if (!IsConfirmedEmail())
             {
                 return NotFound();
             }
@@ -66,6 +66,11 @@ namespace WebRecommend.Controllers
                 }
 
             }
+        }
+
+        private bool IsConfirmedEmail()
+        {
+            return _userManager.GetUserAsync(User).Result.EmailConfirmed;
         }
 
         private ArticleVM GetArticleVM()
@@ -238,8 +243,8 @@ namespace WebRecommend.Controllers
             {
                 if (file != null && file.Length > 0)
                 {
-                    var relativePath = await UploadFileDropbox(file);
-                    return Ok(new { fileUrl = relativePath });
+                    var sharedPath = await UploadFileDropbox(file);
+                    return Ok(new { fileUrl = sharedPath });
                 }
                 return BadRequest("Select a file");
             }
@@ -251,23 +256,14 @@ namespace WebRecommend.Controllers
 
         private async Task<string> UploadFileDropbox(IFormFile file)
         {
-            using (var dropbox = new DropboxClient(Configuration["Dropbox:ClientSecret"]))
-            {
-                var folder = "/Article/Body";
-                var date = DateTime.UtcNow.ToString("MMddyyyy_HHmmssFFF");
-                var filename = $"{ date }_{file.FileName}";
-                using (var memoryStream = file.OpenReadStream())
-                {
-                    var updated = await dropbox.Files.UploadAsync(folder + "/" + filename, WriteMode.Overwrite.Instance, body: memoryStream);
-                    var sharLink = await dropbox.Sharing.CreateSharedLinkWithSettingsAsync(folder + "/" + filename);
-                    return sharLink.Url.ToString().TrimEnd('0') + "1";
-                }
-            }
-        }
-
-        private bool isConfirmedEmail()
-        {
-            return _userManager.GetUserAsync(User).Result.EmailConfirmed;
+            using var dropbox = new DropboxClient(Configuration["Dropbox:ClientSecret"]);
+            var folder = "/Article/Body";
+            var date = DateTime.UtcNow.ToString("MMddyyyy_HHmmssFFF");
+            var filename = $"{ date }_{file.FileName}";
+            using var memoryStream = file.OpenReadStream();
+            var updated = await dropbox.Files.UploadAsync(folder + "/" + filename, WriteMode.Overwrite.Instance, body: memoryStream);
+            var sharLink = await dropbox.Sharing.CreateSharedLinkWithSettingsAsync(folder + "/" + filename);
+            return sharLink.Url.ToString().TrimEnd('0') + "1";
         }
     }
 }

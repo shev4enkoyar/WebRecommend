@@ -124,4 +124,7 @@
   <data name="IsLockout" xml:space="preserve">
     <value>Удален?</value>
   </data>
+  <data name="IsEmailConfirmed" xml:space="preserve">
+    <value>Email подтвержден?</value>
+  </data>
 </root>

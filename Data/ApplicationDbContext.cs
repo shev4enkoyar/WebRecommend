@@ -10,6 +10,7 @@ namespace WebRecommend.Data
         {
 
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ArticleTag>()

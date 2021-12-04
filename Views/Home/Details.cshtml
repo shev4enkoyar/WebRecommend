@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http;
-@using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Identity
 @inject UserManager<AppUser> UserManager
 
 @model WebRecommend.Models.ViewModels.DetailsVM
@@ -18,8 +17,6 @@
         <p>
             <h6>@Localizer["AuthorMark"] @Model.Article.AuthorMark</h6>
         </p>
-
-
         <p>
             <div class="row text-secondary text-opacity-50">
                 @Localizer["Tags"]

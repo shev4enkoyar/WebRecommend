@@ -1,6 +1,5 @@
 ﻿@model WebRecommend.Models.ViewModels.ProfileVM
 
-
 @if (Model.AppUser.LockoutEnabled)
 {
     <h1><del>@Model.AppUser.FullName</del> <i class="bi bi-caret-up"></i>@Model.AppUser.Reputation</h1>

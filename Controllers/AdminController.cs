@@ -24,6 +24,7 @@ namespace WebRecommend.Controllers
             _roleManager = roleManager;
             _userManager = userManager;
         }
+
         public IActionResult Index()
         {
             return View();
@@ -41,14 +42,13 @@ namespace WebRecommend.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult CategoryCreate(Category category)
         {
             if (ModelState.IsValid)
             {
                 _db.Categories.Add(category);
                 _db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Categories");
             }
             return View(category);
         }
@@ -56,26 +56,21 @@ namespace WebRecommend.Controllers
         public IActionResult CategoryEdit(int? id)
         {
             if (id == null || id == 0)
-            {
                 return NotFound();
-            }
-            var obj = _db.Categories.Find(id);
-            if (obj == null)
-            {
+            Category category = _db.Categories.Find(id);
+            if (category == null)
                 return NotFound();
-            }
-            return View(obj);
+            return View(category);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult CategoryEdit(Category category)
         {
             if (ModelState.IsValid)
             {
                 _db.Categories.Update(category);
                 _db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Categories");
             }
             return View(category);
         }
@@ -83,29 +78,22 @@ namespace WebRecommend.Controllers
         public IActionResult CategoryDelete(int? id)
         {
             if (id == null || id == 0)
-            {
                 return NotFound();
-            }
-            var obj = _db.Categories.Find(id);
-            if (obj == null)
-            {
+            Category category = _db.Categories.Find(id);
+            if (category == null)
                 return NotFound();
-            }
-            return View(obj);
+            return View(category);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult CategoryDeletePost(int? id)
         {
-            var obj = _db.Categories.Find(id);
-            if (obj == null)
-            {
+            Category category = _db.Categories.Find(id);
+            if (category == null)
                 return NotFound();
-            }
-            _db.Categories.Remove(obj);
+            _db.Categories.Remove(category);
             _db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Categories");
         }
 
         public IActionResult Users()
@@ -116,29 +104,33 @@ namespace WebRecommend.Controllers
 
         public async Task<IActionResult> UsersEditRole(string userId)
         {
-            // получаем пользователя
-            AppUser user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId);
             if (user != null)
             {
-                // получем список ролей пользователя
                 var userRoles = await _userManager.GetRolesAsync(user);
                 var allRoles = _roleManager.Roles.ToList();
-                ChangeRoleVM model = new ChangeRoleVM
-                {
-                    UserId = user.Id,
-                    UserEmail = user.Email,
-                    UserRoles = userRoles,
-                    AllRoles = allRoles
-                };
+                ChangeRoleVM model = GetChangeRoleVM(user, userRoles, allRoles);
                 return View(model);
             }
-
             return NotFound();
         }
+
+        private static ChangeRoleVM GetChangeRoleVM(AppUser user, IList<string> userRoles, List<IdentityRole> allRoles)
+        {
+            ChangeRoleVM model = new()
+            {
+                UserId = user.Id,
+                UserEmail = user.Email,
+                UserRoles = userRoles,
+                AllRoles = allRoles
+            };
+            return model;
+        }
+
         [HttpPost]
         public async Task<IActionResult> UsersEditRole(string userId, List<string> roles)
         {
-            AppUser user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId);
             if (user != null)
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
@@ -148,25 +140,23 @@ namespace WebRecommend.Controllers
                 await _userManager.RemoveFromRolesAsync(user, removedRoles);
                 return RedirectToAction("Users");
             }
-
             return NotFound();
         }
 
         public async Task<IActionResult> UsersDelete(string userId)
         {
-            AppUser user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId);
             if (user.LockoutEnabled)
             {
                 user.LockoutEnabled = false;
                 user.LockoutEnd = null;
-                await _userManager.UpdateAsync(user);
             }
             else
             {
                 user.LockoutEnabled = true;
                 user.LockoutEnd = DateTime.Now.AddYears(100);
-                await _userManager.UpdateAsync(user);
             }
+            await _userManager.UpdateAsync(user);
             return RedirectToAction("Users");
         }
     }

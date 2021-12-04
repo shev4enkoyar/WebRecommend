@@ -124,4 +124,7 @@
   <data name="IsLockout" xml:space="preserve">
     <value>Deleted?</value>
   </data>
+  <data name="IsEmailConfirmed" xml:space="preserve">
+    <value>Email confirmed?</value>
+  </data>
 </root>

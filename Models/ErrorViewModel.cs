@@ -1,5 +1,3 @@
-using System;
-
 namespace WebRecommend.Models
 {
     public class ErrorViewModel
